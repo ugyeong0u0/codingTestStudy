@@ -39,7 +39,7 @@ class Solution {
             }
             
         }
-        answer+= bridge_length;
+        answer+= bridge_length; // 생각못한 부분 
         
         
         return answer;
