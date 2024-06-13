@@ -6,7 +6,7 @@ class Solution {
         String[] answer = new String[picture.length * k ];
         List<String> list = new ArrayList<>();
         
-        for(int i = 0; i< picture.length;i++){
+        for(int i = 0; i< picture.length;i++){ // 배열의 첫 번째
             String tmp = "";
             for(int j =0; j< picture[i].length(); j++){ // 한 줄 완성하기
                 for(int l =0 ; l<k;l++){
