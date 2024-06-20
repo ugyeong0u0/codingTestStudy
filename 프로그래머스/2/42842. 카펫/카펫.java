@@ -4,7 +4,7 @@ class Solution {
         
         int total = brown + yellow;
         
-        for(int i = 2; i<= Math.sqrt(total); i++){
+        for(int i = 2; i<= brown; i++){
             
             if(total%i ==0){
                 
