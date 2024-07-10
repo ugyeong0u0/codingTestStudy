@@ -40,12 +40,13 @@ public class Main {
             for (int j = 1; j <= v; j++) {
 
                 if (maps[i][j] == 1 && visited[j] == 0) {
-                   
+
                     dfs(i);
                 }
 
             }
-            answer++;
+
+            answer++; // 밖 for문에 있어야함!!
 
         }
 
