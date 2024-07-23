@@ -39,7 +39,7 @@ public class Main {
                     break;
                 }
 
-                if (i - 1 >= 0 && (txt.charAt(i) != 'e' && txt.charAt(i) != 'o') && txt.charAt(i - 1) == txt.charAt(i)) {
+                if (i - 1 >= 0 && txt.charAt(i) != 'e' && txt.charAt(i) != 'o'&& txt.charAt(i - 1) == txt.charAt(i)) {
                     eFlag = true;
                     break;
                 }
