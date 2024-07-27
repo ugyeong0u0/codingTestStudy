@@ -43,7 +43,7 @@ public class Main {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
                     if (maps[i][j][k] == 1 && visited[i][j][k]==0) {
-                        bfs(i, j, k);
+                        bfs();
                     }
                 }
             }
@@ -77,9 +77,9 @@ public class Main {
 
     }
 
-    static void bfs(int Nrow, int Ncol, int Nh) {
+    static void bfs() {
 
-        q.offer(new int[]{Nrow, Ncol, Nh});
+        //q.offer(new int[]{Nrow, Ncol, Nh});
 
         while (!q.isEmpty()) {
 
