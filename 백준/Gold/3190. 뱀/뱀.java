@@ -5,6 +5,11 @@ import java.util.*;
 
 public class Main {
 
+    /* 1. 하나의 맵에 뱀몸통(2), 사과(1) 다 표시하기
+    *  2. 꼬리를 빼는 거라 선입 선출임 => 큐
+    *  3. 자기 몸에 부딪혀도 죽는거
+    *  4. 네 방향움직이는거 ++ -- 한 변수에 하면 되고, 혹은 %4 하면됨 
+    * */
     static int n, apple, dirN, time;
 
     static int [][] maps;
