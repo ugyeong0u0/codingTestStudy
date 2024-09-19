@@ -1,0 +1,14 @@
+-- 코드를 입력하세요
+SELECT FLAVOR
+    FROM (
+   SELECT J.FLAVOR,
+       SUM(J.TOTAL_ORDER + H.TOTAL_ORDER) AS TOTAL
+    FROM FIRST_HALF H
+        FULL OUTER JOIN
+        JULY J
+        ON H.FLAVOR = J.FLAVOR
+    GROUP BY  J.FLAVOR
+    ORDER BY 2 DESC 
+    )
+    WHERE ROWNUM <=3
+
