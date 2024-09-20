@@ -1,122 +1,114 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.*;
+import java.util.*;
+/*
+ *
+ *
+ * */
 
+class Loc{
+    int x;
+    int y, answer ;
+    int z;
+
+    public Loc (int x, int y, int z){
+        this.x= x;
+        this.y=y;
+        this.z=z;
+    }
+
+
+}
 
 public class Main {
 
-    static int answer, m, n, h; // m 가로
-    static int[][][] maps, visited;
-    static int[] dx = {-1, 0, 0, 0, 0, 1};
-    static int[] dy = {0, 0, 0, 1, -1, 0};
-    static int[] dz = {0, 1, -1, 0, 0, 0};
-
-    static Queue<int[]> q = new LinkedList<>();
-
+    static int row, col, n, h, line, answer, tar1, tar2, k;
+    static int[][][] maps;
+    static int[][][] visited;
+    //    static ArrayList<Integer> list ;
+    static int[] dx = {0, 0, 0, 0, +1, -1};
+    static int[] dy = {0, 0, 1, -1, 0, 0};
+    static int[] dz = {+1, -1, 0, 0, 0, 0};
+    static Queue<Loc> q;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+//        n = Integer.parseInt(br.readLine()); // 사람
+//        list = new ArrayList();
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        m = Integer.parseInt(st.nextToken()); // 열
-        n = Integer.parseInt(st.nextToken()); // 행
-        h = Integer.parseInt(st.nextToken()); // 높이
+        col = Integer.parseInt(st.nextToken());
+        row = Integer.parseInt(st.nextToken());
+        h = Integer.parseInt(st.nextToken());
 
-        answer = 0;
-        maps = new int[n][m][h];
-        visited = new int[n][m][h];
+        answer = 0; // 몇일
+        maps = new int[row][col][h];
+        visited =new int[row][col][h];
+//        visited = new int[n + 1];
 
-        for (int k = 0; k < h; k++) {
-            for (int i = 0; i < n; i++) {
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < row; j++) {
                 st = new StringTokenizer(br.readLine());
-                for (int j = 0; j < m; j++) {
-                    maps[i][j][k] = Integer.parseInt(st.nextToken());
+                for (int k = 0; k < col; k++) {
+                    int a = Integer.parseInt(st.nextToken());
+                    maps[j][k][i] = a;
+                }
+            }
+        }
 
-                    if(maps[i][j][k] == 1){
-                        q.offer(new int[]{i, j, k});
+
+        q= new LinkedList<>();
+
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < row; j++) {
+                for (int k = 0; k < col; k++) {
+                    if(maps[j][k][i] ==1){
+                        q.add(new Loc(j, k, i));
                     }
                 }
             }
         }
 
+        bfs();
 
-
-        for (int k = 0; k < h; k++) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    if (maps[i][j][k] == 1 && visited[i][j][k]==0) {
-                        bfs();
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < row; j++) {
+                for (int k = 0; k < col; k++) {
+                    if(maps[j][k][i] ==0){
+                        System.out.println(-1);
+                        return;
                     }
+
                 }
             }
         }
 
-        for (int k = 0; k < h; k++) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    answer = Math.max(answer, visited[i][j][k]);
-                }
-            }
-        }
-
-        boolean flag = false;
-        for (int k = 0; k < h; k++) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    if(maps[i][j][k]==0){
-                        flag = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if(flag){
-            System.out.println(-1);
-        }else{
-            System.out.println(answer);
-        }
+        System.out.println(answer);
 
     }
 
     static void bfs() {
 
-        //q.offer(new int[]{Nrow, Ncol, Nh});
+        while(!q.isEmpty()){
+            Loc tmp = q.poll();
 
-        while (!q.isEmpty()) {
+            for(int i = 0; i< 6 ;i++){
+                int nx = tmp.x + dx[i];
+                int ny = tmp.y + dy[i];
+                int nz = tmp.z + dz[i];
 
-            int[] tmp = q.poll();
-            int a = tmp[0];
-            int b = tmp[1];
-            int c = tmp[2];
-//            System.out.println("[" + a + " " + b + " " + c + "]");
+                if(nx >= 0 &&ny >= 0 &&nz >= 0 && nx<row && ny < col && nz< h && visited[nx][ny][nz] ==0 && maps[nx][ny][nz]==0){
 
-            maps[a][b][c] = 1;
+                    visited[nx][ny][nz]  = visited[tmp.x][tmp.y][tmp.z]+1;
+                    answer = Math.max(visited[nx][ny][nz], answer);
+                    maps[nx][ny][nz]=1;
+                    q.offer(new Loc(nx,ny,nz));
 
-            for (int i = 0; i < 6; i++) {
-                int nR = dx[i] + a;
-                int nC = dy[i] + b;
-                int nZ = dz[i] + c;
-
-
-                if (nR >= 0 && nC >= 0 && nZ >= 0 && nR < n && nC < m && nZ < h && maps[nR][nC][nZ] == 0 && visited[nR][nC][nZ]==0 ) {
-                    visited[nR][nC][nZ] = visited[a][b][c] + 1;
-                    q.offer(new int[]{nR, nC, nZ});
                 }
             }
-
-            // maps log
-//            for (int k = 0; k < h; k++) {
-//                System.out.print(k + " -----------\n");
-//                for (int i = 0; i < n; i++) {
-//                    for (int j = 0; j < m; j++) {
-//                        System.out.print(visited[i][j][k] + " ");
-//                    }
-//                    System.out.print("\n");
-//                }
-//                System.out.print("\n");
-//            }
         }
-
     }
+
 }
-
-
