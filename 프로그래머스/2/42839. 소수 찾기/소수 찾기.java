@@ -1,54 +1,64 @@
 import java.util.*;
 class Solution {
+    
+    static boolean [] visited;
+    static int answer;
+    static Set<Integer> hs = new HashSet<>();
+    
     public int solution(String numbers) {
-        int answer = 0;
+        answer = 0;
+        visited = new boolean[7];
         
-        HashSet<Integer> set = new HashSet<>();
-        List <String> list = new ArrayList<>();
-        combi("", numbers, set);
+        dfs(numbers,"",0);      
         
-       Iterator<Integer> iter = set.iterator(); // <> 없다면 
-        
-        while(iter.hasNext()){
+        for(Integer r : hs){
             
-           int nn=  iter.next(); 
+            boolean res = odd(r);
             
-           if(nn ==2) answer++;
-            if(nn%2!=0 && isPrime(nn)){
+            if(res){
 
-             answer++;
+                answer++;
+            
             }
-
-                         
+            
+            
+            
         }
-        
         
         return answer;
     }
     
-    static boolean isPrime(int nn){
-        if(nn==1 || nn==0) return false ; 
-        for(int i =3 ; i<= Math.sqrt(nn); i+=2){
-            
-            if(nn % i ==0) return false ;
-            
+    static void dfs(String numbers, String s, int depth){
+        if(depth > numbers.length()){
+            return;
         }
-        System.out.println("소수"+nn);
+        
+        for(int i= 0; i< numbers.length();i++){
+            char a= numbers.charAt(i);
+        
+            if(!visited[i]){
+                visited[i]=true;
+                hs.add(Integer.parseInt(s+a));
+                dfs(numbers, a+s , depth+1);
+                visited[i]=false;
+            }
+        }
+        
+    }
+    
+    static boolean odd(int a){
+        
+       if(a < 2){
+           return false;
+       }else{
+           for(int i =2 ; i<=(int) Math.sqrt(a); i++){
+               
+               if(a%i==0){
+                   return false;
+               }
+               
+           }
+       }
         return true;
-        
     }
-    
-    static void combi(String tmp, String n, HashSet set){
-        
-        if(!tmp.equals("")) set.add(Integer.valueOf(tmp));
-        
-        for(int i =0; i< n.length();i++ ){
-            
-            combi(tmp+n.charAt(i), n.substring(0,i)+n.substring(i+1,n.length()), set);
-            
-        }
-        
-        
-    }
-    
 }
