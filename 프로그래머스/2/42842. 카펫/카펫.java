@@ -1,10 +1,11 @@
 class Solution {
     public int[] solution(int brown, int yellow) {
         int[] answer = new int[2];
+
         
         int total = brown + yellow;
         
-        for(int i = 2; i<= brown; i++){
+        for(int i = 2; i<= brown; i++){ // brown까지만 for문 걸어도 됨
             
             if(total%i ==0){
                 
