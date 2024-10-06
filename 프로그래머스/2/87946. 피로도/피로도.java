@@ -19,7 +19,10 @@ class Solution {
                 
                 a[0]=9999;
                 cnt=Math.max(1+dfs(k-b1,d),cnt);
-                a[0]=a1;
+                a[0]=a1;  
+                
+                
+                
                 
             }
             
