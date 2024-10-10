@@ -24,6 +24,10 @@ class Solution {
                   lost[i] =0;
                  answer++;
                  continue;
+                  
+                  
+                  
+                  
             }
             
         }
