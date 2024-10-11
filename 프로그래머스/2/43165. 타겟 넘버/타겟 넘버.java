@@ -18,7 +18,7 @@ class Solution {
             
             if(sum == t){
                 
-                return 1;
+                return 1; // 모든 숫자를 다 써야하기 때문에 
                 
             }else{
                 return 0;
@@ -26,7 +26,9 @@ class Solution {
             
         }
        
-       return dfs(numbers, sum+numbers[n], n+1 )+dfs(numbers, sum-numbers[n], n+1 );        
+       return dfs(numbers, sum+numbers[n], n+1 )+dfs(numbers, sum-numbers[n], n+1 );  
+        
+        
         
     }
 }
