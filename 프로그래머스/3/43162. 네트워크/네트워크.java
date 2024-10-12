@@ -14,6 +14,8 @@ class Solution {
         
         for(int i = 0 ; i< n;i++){
             
+            
+            
             if(!flag[i]){
                 answer++;
                 dfs(i); // i는 start 
@@ -31,7 +33,7 @@ class Solution {
         flag[start]=true;
         for(int i = 0; i< len;i++ ){
             
-            if(com[start][i]==1 && flag[i] ==false){
+            if(com[start][i]==1 && flag[i] ==false){ // falg[i] 가 break 문이 될 수 있음 
                 dfs(i);
             }
         }
