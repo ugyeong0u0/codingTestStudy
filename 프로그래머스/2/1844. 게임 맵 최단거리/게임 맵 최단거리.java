@@ -55,6 +55,9 @@ class Solution {
                 visited[nx][ny]=visited[cx][cy]+1;
                 q.offer(new int [] {nx,ny});
                 
+                
+                
+                
             }
             
         }
