@@ -1,64 +1,70 @@
 import java.util.*;
 class Solution {
     
-    static boolean [] visited;
-    static int answer;
+    static int [] visited;
+    static Set<String> set = new HashSet<>();
     static Set<Integer> hs = new HashSet<>();
     
     public int solution(String numbers) {
-        answer = 0;
-        visited = new boolean[7];
+        int answer = 0;
         
-        dfs(numbers,"",0);      
+        visited = new int [8];
         
-        for(Integer r : hs){
+        for( int i =1; i<= numbers.length(); i++){
             
-            boolean res = odd(r);
-            
-            if(res){
-
-                answer++;
-            
-            }
-            
+            dfs(0,i,"", numbers);
             
             
         }
         
+        for(String a : set ){
+        
+            isodd(a);
+
+        }
+
+        for(int a : hs){
+            
+            answer++;
+        }
+        
+            
         return answer;
     }
     
-    static void dfs(String numbers, String s, int depth){
-        if(depth > numbers.length()){
-            return;
+    static void dfs(int n,int dept, String tmp, String numbers){
+        
+        if(n== dept){
+            set.add(tmp);
         }
         
-        for(int i= 0; i< numbers.length();i++){
+         for(int i = 0; i< numbers.length(); i++){
+            
             char a= numbers.charAt(i);
-        
-            if(!visited[i]){
-                visited[i]=true;
-                hs.add(Integer.parseInt(s+a));
-                dfs(numbers, a+s , depth+1);
-                visited[i]=false;
-            }
+            if(visited[i]==0){
+                visited[i]=1;
+                dfs(n+1, dept,tmp+a , numbers);
+                visited[i]=0;
+            
+            }   
         }
-        
     }
     
-    static boolean odd(int a){
+    
+    static void isodd(String number ){
         
-       if(a < 2){
-           return false;
-       }else{
-           for(int i =2 ; i<=(int) Math.sqrt(a); i++){
-               
-               if(a%i==0){
-                   return false;
-               }
-               
-           }
-       }
-        return true;
+        int a = Integer.parseInt(number);
+        if(a<2){
+            return;    
+        }
+        for(int i = 2; i<Math.abs(a); i++){
+            if(a%i==0){
+                return;
+            }
+            
+        }
+        hs.add(a);
+        
+    
     }
 }
