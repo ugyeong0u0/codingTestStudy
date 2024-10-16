@@ -13,7 +13,7 @@ class Solution {
         
         Arrays.sort(n, new Comparator<String>(){
             
-            public int compare(String o1, String o2){ //하나씩만 비교 시  실행한 결괏값 "9534303" 나옴 
+            public int compare(String o1, String o2){ 
                 
                 return (o2+o1).compareTo(o1+o2);
                 
@@ -27,6 +27,8 @@ class Solution {
         }
         
         answer= answer.charAt(0) == '0' ? "0" : answer; 
+        
+        
         
         return answer;
     }
