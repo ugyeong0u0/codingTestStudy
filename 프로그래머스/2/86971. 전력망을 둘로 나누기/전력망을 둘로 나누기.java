@@ -1,95 +1,68 @@
 class Solution {
-    
-    static int N ; 
-    static boolean [][] edges ;
-    static boolean [] visited ;
-    static int len;
-    
-    
+    static int [][] visited;
+    static int [][] maps;
     public int solution(int n, int[][] wires) {
-        int answer = -1;
+        int answer = Integer.MAX_VALUE;
         
-        N = n+1;
-        len = wires.length;
-        edges = new boolean [N][N];
-        visited = new boolean[N]; // dfs에서 사용할 visited  
+      
+        maps = new int [n+1][n+1];
         
-        // 배열 초기화 
-        for(int i = 0 ; i< len ;i++){
-            
-            for(int j =0 ; j< 2; j++){
-                
-                int a = wires[i][0]; 
-                int b = wires[i][1];
-                
-                edges[a][b] = true;
-                edges[b][a] = true;
-                
-                
-            }
-            
-        }
-        
-        
-        // dfs로 간선 개수 찾기 
-        
-        int res = Integer.MAX_VALUE;
-        for(int i = 0; i< len; i++){
-            for(int  j = 0; j< 2; j++){
+        for(int i = 0 ; i< wires.length; i++){
+            for(int j =0 ; j<2;j++){
                 
                 int a = wires[i][0];
                 int b = wires[i][1];
+
+                maps[a][b]=1;
+                maps[b][a]=1;
                 
-                edges[a][b] = false;
-                edges[b][a] = false;
-                
-                int Ia = dfs(a,0);
-                int Ib = dfs(b,0); // 전선끊은 나머지 파트도 세야해서
-                res = Math.min(res, Math.abs(Ia-Ib));
-                
-                edges[b][a] = true;
-                edges[a][b] = true;
-                    
-                    
             }
-           
-            
         }
-        
-        answer = res; 
-        
+         
+        for(int i = 0 ; i< wires.length; i++){
+            for(int j =0 ; j<2;j++){
+                int a = 0;
+                int b = 0;
+
+                    int a1 = wires[i][0];
+                    int b1 = wires[i][1];
+                
+                    visited = new int [n+1][n+1];
+                
+                    maps[a1][b1]=0 ; // 연결 끊기
+                    maps[b1][a1]=0;
+                
+                    a = dfs(a1,0,n);
+                    b = dfs(b1,0,n);
+                
+                    maps[a1][b1]=1;
+                    maps[b1][a1]=1;
+                
+                int tmp  = Math.abs(a-b);
+                answer = Math.min(answer, tmp);
+                
+                
+            }
+        }
+    
         return answer;
     }
     
-    
-    static int dfs(int loc , int cnt){
+    static int dfs(int number,int dept,int n){
         
-        if(visited[loc]){
+        for(int i = 1; i<=n; i++){
             
-            return 0;
-            
-        }
-        int sum =1 ;
-        visited[loc] = true;
-        for(int i =0 ; i< N ; i++){
-            
-            if(!edges[loc][i]){
-                
-                continue;
-                
+            if(maps[number][i] == 1 && visited[number][i]==0){
+                System.out.println(number + " ,  " +i);
+                visited[number][i]=1;
+                visited[i][number]=1;
+               dept = dfs(i,dept+1,n);
             }
-            
-            sum+=dfs(i, cnt+1); // *****
-            
-            
+        
         }
         
-        visited[loc] = false ;
-        
-        
-        
-        
-        return sum ; 
+        return dept;
         
     }
+    
 }
