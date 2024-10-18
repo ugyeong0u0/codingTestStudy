@@ -13,6 +13,9 @@ class Solution {
         
         answer = Math.min(nums.length/2, set.size());
         
+        
+        
+        
         return answer;
     }
 }
