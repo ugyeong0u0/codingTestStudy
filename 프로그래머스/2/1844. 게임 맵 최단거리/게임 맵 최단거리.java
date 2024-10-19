@@ -1,70 +1,77 @@
 import java.util.*;
 
+class Loc{
+    
+    int x ;
+    int y;
+     
+    
+    public Loc (int x , int y){
+        
+        this.x= x;
+        this.y=y;
+        
+    }
+    
+}
+
 class Solution {
     
-    static int [] x = {0, +1, 0, -1 };
-    static int [] y = {-1, 0, +1, 0};
-    
-    static int answer =-1 ;
-    static int lenX, lenY ;
+    static int [] dx = {0,0,1,-1};
+    static int [] dy = {+1,-1,0,0};
     static int [][] visited;
-    
+    static int [][] map;
+    static int answer;
     public int solution(int[][] maps) {
-      
-        lenX = maps.length;
-        lenY = maps[0].length;
-        visited = new int[lenX][lenY] ;
+        answer = 0;
         
+        map = maps;
+        visited= new int [maps.length][maps[0].length];
         
+        bfs();
         
-        bfs(maps);
-      
-        answer = visited[lenX-1][lenY-1];
+        answer= visited[maps.length-1][maps[0].length-1];
         
         if(answer== 0){
-            return -1;
-        }
-        
-        return answer;
+            
+           return answer =-1;
+        }else
+            return answer+1;
     }
     
-    public void bfs(int [][] maps){
-        
-        Queue<int []> q= new LinkedList<>();
-        
-        q.offer(new int [] {0,0});
-        
-        visited[0][0]=1;
+    
+    static void bfs(){
+        Queue<Loc> q= new LinkedList<>();
+        q.add(new Loc(0,0));
         
         while(!q.isEmpty()){
-        
-            int [] cur=  q.poll();
+            Loc tmp = q.poll();
             
-            int cx = cur[0];
-            int cy = cur[1];
+             for(int i = 0; i< 4; i++){
+                int nx = dx[i]+ tmp.x;
+                 int ny = dy[i]+ tmp.y;
             
-            
-            for(int i =0 ; i< 4; i++){
+                 if(nx >=0 && ny>=0 && nx< map.length &&  ny < map[0].length && visited[nx][ny]==0 && map[nx][ny]==1){
                 
-                int nx = cx + x[i];
-                int ny = cy + y[i];
-
-            
-           
-            if(nx>=0 && nx<lenX && ny>=0 && ny<lenY && visited[nx][ny]==0&& maps[nx][ny]==1  ){
-                visited[nx][ny]=visited[cx][cy]+1;
-                q.offer(new int [] {nx,ny});
-                
-                
-                
+                visited[nx][ny]= visited[tmp.x][tmp.y]+1;
+                q.add(new Loc(nx,ny));
                 
             }
+                 
+                 
+                 
+               }
+            
+            
             
         }
-            
+        
+       
+        
+        
+        
+        
+        
     }
-        
-        
-        
-    }
+    
 }
