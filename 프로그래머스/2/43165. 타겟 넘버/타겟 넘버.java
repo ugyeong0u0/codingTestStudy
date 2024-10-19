@@ -1,34 +1,47 @@
 class Solution {
-    
-    static int t ;
+    /*
+    1. for문 안에서 dfs(현재 배열 인덱스+ )
+    dfs(현재 배열 인덱스 -)
+    */
+    static int answer=0;
+    static int [] nums;
+    static int t;
     public int solution(int[] numbers, int target) {
-        int answer = 0;
-        t = target;
+        nums = numbers;
+        t= target;
         
-        
-        answer = dfs(numbers, 0 ,0 ); // 주어진 배열, 현재 값의 합, 현재 인덱스, dfs 횟수 
+        dfs(0,0);
         
         
         return answer;
     }
     
-    public int dfs(int [] numbers, int sum, int n){
-        
-        if(n == numbers.length){
+    static void dfs(int prev, int dept){
+      
+        if(dept== nums.length){
             
-            if(sum == t){
+            if(prev == t ){
                 
-                return 1; // 모든 숫자를 다 써야하기 때문에 
-                
-            }else{
-                return 0;
+                answer++;
+            
             }
-            
+            return;
         }
-       
-       return dfs(numbers, sum+numbers[n], n+1 )+dfs(numbers, sum-numbers[n], n+1 );  
+      
+        
+        // for(int i =dept ; i<nums.length;i++){
+            // System.out.println("prev  " +prev + "dept" +dept);
+            dfs(prev+nums[dept], dept+1);
+        // System.out.println("prev  " +prev + "dept" +dept);
+            dfs(prev-nums[dept], dept+1);
+            
+            
+        // }
         
         
         
     }
+    
 }
+
+
