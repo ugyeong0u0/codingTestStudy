@@ -9,6 +9,8 @@ class Solution {
                
                answer[i]++;
                if(prices[i]>prices[j]){
+                   
+                   
                    break;
                }
                
