@@ -1,68 +1,49 @@
 import java.util.*;
 class Solution {
+    static int [] visited;
+    ArrayList <Integer> list = new ArrayList<>();
     public int solution(int n, int[] lost, int[] reserve) {
-        int answer = n-lost.length;
+        int answer = 0;
         
-        List<Integer> list = new ArrayList<>();
+        visited= new int [n+1];
         
         Arrays.sort(lost);
         Arrays.sort(reserve);
         
-        for(int i =0 ; i< reserve.length; i++){
-            
-            list.add(reserve[i]);
-           
+        
+        for(int i =0; i< lost.length; i++ ){
+            int t = lost[i];
+            visited[t]=1; // 체육복 없음
         }
         
-        
-        for(int i =0; i<lost.length;i++){
-            
-              if(list.contains(lost[i])){ // ** 다른 사람에게 체육복 못빌려줌 
+        for(int i =0; i< reserve.length; i++ ){
+            int t = reserve[i];
+            if(visited[t]==1){
+                visited[t]=0; // 체육복 없음
+            }else{
                 
-              int idx = list.indexOf(lost[i]); 
-                 list.remove(idx);
-                  lost[i] =0;
-                 answer++;
-                 continue;
-                  
-                  
-                  
-                  
+                list.add(t);
             }
             
         }
         
         
-        for(int i =0; i<lost.length;i++){
+        for(int i =0; i< list.size(); i++){
+            
+            int t = list.get(i);
+             if(t-1>=1 && visited[t-1]==1){
+                visited[t-1]=0;
+            }else if( t+1 <=n && visited[t+1]==1){
+                visited[t+1]=0;
+            }
+        }
         
-        if(lost[i]!=0){
-            if(list.contains(lost[i]-1)){
+        for(int i = 1; i< visited.length; i++){
+            if(visited[i]==0){
                 
-                int idx = list.indexOf(lost[i]-1); 
-                list.remove(idx);
                 answer++;
-                continue;
             }
-            
-           
-            
-           
-            if(list.contains(lost[i]+1)){
-                
-                int idx = list.indexOf(lost[i]+1); 
-                list.remove(idx);
-                answer++;
-                continue;
-            }
-            
         }
-             
-            
-            
-            
-        }
-        
-        
         
         return answer;
     }
