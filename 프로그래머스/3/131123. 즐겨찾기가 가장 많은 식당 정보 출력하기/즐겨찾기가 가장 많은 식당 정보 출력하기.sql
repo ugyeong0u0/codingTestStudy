@@ -6,6 +6,7 @@ SELECT FOOD_TYPE,
         FROM 
             REST_INFO
         WHERE 
+    
             1=1 AND 
             (FOOD_TYPE, FAVORITES) IN
             (
