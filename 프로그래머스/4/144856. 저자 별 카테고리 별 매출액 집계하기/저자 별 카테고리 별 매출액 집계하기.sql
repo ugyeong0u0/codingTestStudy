@@ -9,6 +9,7 @@ SELECT B.AUTHOR_ID,
         BOOK_SALES BS
         
     WHERE 
+    
         B.AUTHOR_ID = A.AUTHOR_ID
         AND B.BOOK_ID = BS.BOOK_ID
         AND EXTRACT(MONTH FROM BS.SALES_DATE) ='1'
