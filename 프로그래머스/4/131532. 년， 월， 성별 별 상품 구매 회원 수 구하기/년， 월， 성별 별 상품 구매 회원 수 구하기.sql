@@ -7,8 +7,10 @@ SELECT
     FROM
         USER_INFO U,
         ONLINE_SALE O 
+        
     WHERE 1=1 
         AND U.USER_ID= O.USER_ID
+        
     GROUP BY 
          TO_CHAR(O.SALES_DATE, 'YYYY'),
          EXTRACT(MONTH FROM O.SALES_DATE),
@@ -22,4 +24,3 @@ SELECT
 --         ONLINE_SALE O 
 --     WHERE 1=1 
 --         AND U.USER_ID= O.USER_ID
-        
