@@ -1,0 +1,15 @@
+-- 코드를 입력하세요
+SELECT ANIMAL_ID,
+        NAME
+FROM(
+SELECT A.ANIMAL_ID,
+        A.NAME,
+        (B.DATETIME-A.DATETIME+1) AS M
+    FROM ANIMAL_INS A,
+        ANIMAL_OUTS B
+    WHERE 1=1 
+        AND A.ANIMAL_ID= B.ANIMAL_ID
+    ORDER BY 3 DESC
+ )
+ WHERE ROWNUM<3
+ 
