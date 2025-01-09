@@ -62,12 +62,12 @@ public class Main {
         }
 
         for(int i =next; i< n ;i++){
-            if(!visited[i]){
-                visited[i]= true;
+
+
                 arr[dept] = numsT[i];
                 dfs(dept+1,i+1);
-                visited[i]=false;
-            }
+
+
 
         }
 
