@@ -69,8 +69,9 @@ public class Main {
             if (map[prev][first] != 0){
 //                System.out.print( "마지막 " + first);
 //                sum ;
-
-                answer = Math.min(answer, sum+ map[prev][first]);}
+                sum+= map[prev][first];
+                answer = Math.min(answer, sum);
+            }
 
 
 //            System.out.println();
