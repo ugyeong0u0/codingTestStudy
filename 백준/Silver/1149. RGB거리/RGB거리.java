@@ -1,56 +1,65 @@
-import java.util.Scanner;
- 
+import javax.swing.plaf.IconUIResource;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 public class Main {
-	
-	final static int Red = 0;
-	final static int Green = 1;
-	final static int Blue = 2;
-	
-	static int[][] Cost;
-	static int[][] DP;
-	
-	public static void main(String[] args) {
-		
-		Scanner in = new Scanner(System.in);
-		
-		int N = in.nextInt();
-        
-		Cost = new int[N][3];
-		DP = new int[N][3];
-		
-		for(int i = 0; i < N; i++) {
-			Cost[i][Red] = in.nextInt();
-			Cost[i][Green] = in.nextInt();
-			Cost[i][Blue] = in.nextInt();
-		}
-		
-		// DP의 첫번째 값(집)은 각 색상비용의 첫번째 값으로 초기화
-		DP[0][Red] = Cost[0][Red];
-		DP[0][Green] = Cost[0][Green];
-		DP[0][Blue] = Cost[0][Blue];
-		
-		
-		System.out.print(Math.min(Paint_cost(N- 1, Red), Math.min(Paint_cost(N - 1, Green), Paint_cost(N - 1, Blue))));
-	}
-	
-	static int Paint_cost(int N, int color) {
-		
-		// 만약 탐색하지 않은 배열이라면
-		if(DP[N][color] == 0) {
-			
-			// color의 색에 따라 이전 집의 서로 다른 색을 재귀호출하여 최솟값과 현재 집의 비용을 더해서 DP에 저장한다
-			if(color == Red) {
-				DP[N][Red] = Math.min(Paint_cost(N - 1, Green), Paint_cost(N - 1, Blue)) + Cost[N][Red];
-			}
-			else if(color == Green) {
-				DP[N][Green] = Math.min(Paint_cost(N - 1, Red), Paint_cost(N - 1, Blue)) + Cost[N][Green];
-			}
-			else {
-				DP[N][Blue] = Math.min(Paint_cost(N - 1, Red), Paint_cost(N - 1, Green)) + Cost[N][Blue];
-			}
-			
-		}
-		
-		return DP[N][color];
-	}
+    static int n, answer;
+    static int[][] h;
+    static int[][] visited;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        answer = Integer.MAX_VALUE;
+
+
+        h = new int[n][3];
+        visited = new int[n][3];
+        for (int i = 0; i < n; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            h[i][0] = Integer.parseInt(st.nextToken());
+            h[i][1] = Integer.parseInt(st.nextToken());
+            h[i][2] = Integer.parseInt(st.nextToken());
+
+
+        }
+
+
+
+        visited[0][0] = h[0][0];
+        visited[0][1] = h[0][1];
+        visited[0][2] = h[0][2];
+
+        /**
+         * 1에서 빨간색을 선택하면
+         * 2에선 g나 b를 선택해야함
+         * dp[2][red] = min(dp[1][g], dp[1][b]) + dp [2][r];
+         * dp[2][g] = min(dp[1][r], dp[1][b]) + dp [2][g];
+         * dp[2][b]=
+         *
+         *
+         */
+        System.out.println(Math.min(recur(0, n - 1), Math.min(recur(1, n - 1), recur(2, n - 1))));
+
+
+    }
+
+    public static int recur(int color, int lv) {
+        if (visited[lv][color]==0) {
+
+            if (color == 0) {
+                visited[lv][0] = Math.min(recur(1, lv - 1), recur(2, lv - 1))+h[lv][0];
+            } else if (color == 1) {
+                visited[lv][1] = Math.min(recur(0, lv - 1), recur(2, lv - 1))+h[lv][1];
+            } else {
+                visited[lv][2] = Math.min(recur(0, lv - 1), recur(1, lv - 1))+h[lv][2];
+            }
+        }
+        return visited[lv][color];
+
+    }
 }
+
