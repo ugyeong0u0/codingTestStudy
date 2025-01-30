@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main{
 
     static int n;
-    static Integer [][] dp ;
+    static int [][] dp ;
 
     public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,10 +17,10 @@ public class Main {
 
         n = Integer.parseInt(br.readLine());
 
-        dp= new Integer [41][2];
+        dp= new int [41][2];
 
         dp[0][0]=1;
-        dp[0][1]=0;
+        dp[0][1] =0;
         dp[1][0]=0;
         dp[1][1]=1;
 
@@ -38,14 +38,10 @@ public class Main {
 
     public static int dfs(int k, int l){
 
-        if(k>1 && dp[k][l]== null){
-
+        if(k>1 && dp[k][l]==0 ){
             dp[k][l]= dfs(k-1, l)+ dfs(k-2,l);
-            // 3 = 2,0 + 1,0
-            // 2 = 1,0 + 0,0
         }
 //        System.out.print(k+ "의"+l+"은"+dp[k][l]);
-//        System.out.println("k :   "+ k+ " l  "+ l  +  "   리턴 되는값    " + dp[k][l]);
         return dp[k][l];
 
     }
