@@ -1,93 +1,68 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 import java.util.*;
-/*
- *
- *
- * */
-
-class Loc {
-    int x;
-    int y, answer;
-
-
-    public Loc(int x, int y) {
-        this.x = x;
-        this.y = y;
-
-    }
-
-
-}
 
 public class Main {
 
-    static int n, m;
-
-//    static int[][] convi, san, goa;
-//    static int[] visited;
-
-    static int[] arr1, arr2;
-    static ArrayList<Integer> arr = new ArrayList<>();
+    static int n, m, answer;
+    static int[] arr, visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine()); // 테케 수
-
-        arr1 = new int[n];
-      
+        n = Integer.parseInt(br.readLine());
+        arr = new int[n];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            arr1[i] = Integer.parseInt(st.nextToken());
+            int k = Integer.parseInt(st.nextToken());
+            arr[i] = k;
         }
-        m = Integer.parseInt(br.readLine()); // 테케 수
-        arr2 = new int[m];
+        Arrays.sort(arr);
+
+        m = Integer.parseInt(br.readLine());
+        visited = new int[m];
+
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < m; i++) {
-            arr2[i] = Integer.parseInt(st.nextToken());
-        }
 
+            int k = Integer.parseInt(st.nextToken());
 
+            int mid = (n-1)/2;
 
-        Arrays.sort(arr1);
+            int l = 0;
+            int r = n-1;
+            // 1 2 3 4 5
 
-        for (int i = 0; i < arr2.length; i++) {
-            int le = 0; // 왼쪽 인덱스
-            int right = arr1.length - 1; // 오른쪽 인덱스
-            int mid = (le + right) / 2;
-            int flag = 0;
-
-            while (le <= right) {
-                mid = (le + right) / 2;
-
-                if (arr1[mid] == arr2[i]) {
-                    flag = 1;
+            while(r>=l){ // ***
+//                System.out.println("  k:  "+k +  " l: "+ l+"   m: "  + mid + "  r: "+r);
+                if(arr[mid]== k){ // ** mid == k 라고 작성함
+                    visited[i]= 1;
                     break;
-                }else if (arr1[mid] < arr2[i]) {
-                    le = mid + 1;
-                } else {
-                    right = mid - 1;
+                }
+                if(arr[mid]<k){
+                    l= mid+1;
+                    mid = (l+r)/2;
+                }else{
+                    r= mid-1;
+                    mid = (l+r)/2;
                 }
 
             }
-            if (flag == 1) {
-                arr.add(1);
-            } else {
-                arr.add(0);
-            }
 
 
         }
 
-        for (int i = 0; i < arr.size(); i++) {
-            System.out.println(arr.get(i));
+        for(int i : visited){
+            System.out.println(i);
         }
+
+//        System.out.println(arr[3/2]);
+
 
 
     }
-
-
 }
