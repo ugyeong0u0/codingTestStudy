@@ -1,62 +1,102 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-	static HashSet<Integer> set=new HashSet<>();
-	static int n,m;
-	static boolean[] visited;
-	static int[] weight;
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Scanner sc=new Scanner(System.in);
-		n=sc.nextInt();
-		m=sc.nextInt();
-		weight=new int[n];
-		visited=new boolean[n];
-		
-		for(int i=0;i<n;i++)
-			weight[i]=sc.nextInt();
-		
-		dfs(0,0,0);
-		
-		// 정렬을 위해 HashSet의 데이터를 연결리스트에 복산
-		ArrayList<Integer> result=new ArrayList<>(set);
-		Collections.sort(result); // 정렬
-		
-		// 소들의 몸무게 합으로 만들 수 있는 소수가 없는 경우
-		if(result.size()==0)
-			System.out.println(-1);
-		// 소들의 몸무게 합으로 만들 수 있는 소수가 있다면 출력
-		else {
-			for(int i=0;i<result.size();i++)
-				System.out.print(result.get(i)+" ");
-		}
-	}
-	
-	// 백트래킹
-	static void dfs(int depth, int sum, int start) {
-		// m마리의 소를 선택했다면 몸무게의 합이 소수인지 판별
-		if(depth==m) {
-			if(isPrime(sum))
-				set.add(sum); // 몸무게의 합이 소수라면 HashSet에 몸무게 삽입 
-			return;
-		}
-		
-		// 중복된 경우의 수를 제거하기 위해 start 부터 탐색
-		for(int i=start;i<n;i++) {
-			if(!visited[i]) {
-				visited[i]=true;
-				dfs(depth+1,sum+weight[i],i+1);
-				visited[i]=false;
-			}
-		}
-	}
-	
-	// 에라토스테네스의 채로 소수 판별
-	static boolean isPrime(int num) {
-		for(int i=2;i<=Math.sqrt(num);i++) {
-			if(num%i==0)
-				return false;
-		}
-		return true;
-	}
+
+    static StringBuilder sb = new StringBuilder();
+    static int[] visited, arr, sum; // 주어진
+
+    static int n, m;
+    static LinkedHashSet<Integer> set = new LinkedHashSet<>();
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        // 변수 초기화
+        n = Integer.parseInt(st.nextToken()); // 부등호 개수
+        m = Integer.parseInt(st.nextToken()); // 부등호 개수
+
+
+        // 배열 초기화
+        arr = new int[n]; // 숫자 0- 9까지 만든것
+        visited = new int[n]; // 숫자 방문
+        sum = new int[m];
+
+
+        // 배열 입력값 넣기
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        Arrays.sort(arr);
+
+//        for(int i : arr){
+//            System.out.println(i);
+//        }
+
+        
+        
+        dfs(0, 0);
+
+
+        ArrayList <Integer> list = new ArrayList<>(set);
+
+        Collections.sort(list);
+        
+        if (list.size() == 0) {
+            sb.append(-1);
+        } else {
+            for (int i : list) {
+                sb.append(i).append(" ");
+            }
+        }
+        System.out.println(sb);
+
+
+    }
+
+    static void dfs(int dept, int next) {
+
+        if (dept == m) {
+            int sum2 = 0;
+            for (int i : sum) {
+                sum2 += i;
+            }
+
+            boolean result = isOdd(sum2);
+
+            if (result) {
+                set.add(sum2);
+            }
+            return;
+        }
+
+        for (int i = next; i < n; i++) {
+            sum[dept] = arr[i];
+            dfs(dept + 1, i + 1);
+        }
+
+    }
+
+    static boolean isOdd(int num) {
+        if (num == 1) {
+            return false;
+        }
+        if (num == 2 || num == 3) {
+            return true;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) { // ** math. aqrt!!!
+            if (num % i == 0) {
+                return false;
+            }
+
+        }
+        return true;
+
+    }
+
 }
