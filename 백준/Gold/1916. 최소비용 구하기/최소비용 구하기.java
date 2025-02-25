@@ -23,7 +23,7 @@ class Circle implements Comparable<Circle> {
     }
 }
 
-public class Main{
+public class Main {
 
     static StringBuilder sb = new StringBuilder();
     static int[] dist; // 거리
@@ -87,11 +87,17 @@ public class Main{
                         pq.offer(new Circle(tmp.end, dist[tmp.end]));
                     }
                 }
+//                System.out.println("현재 우선순위 큐 요소: " + Arrays.toString(pq.toArray()));
+            }
+
+            if(now.end == b){
+                System.out.println(dist[b]);
+                return;
             }
         }
 
 
-        System.out.println(dist[b]);
+//        System.out.println(dist[b]);
     }
 
 
