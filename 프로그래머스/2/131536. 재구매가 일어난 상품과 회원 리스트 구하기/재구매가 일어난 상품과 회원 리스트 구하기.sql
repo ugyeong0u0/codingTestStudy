@@ -1,14 +1,8 @@
 -- 코드를 입력하세요
-SELECT
-     USER_ID,
-     PRODUCT_ID
-    
-    FROM 
-       ONLINE_SALE
-    WHERE 1=1
-    GROUP BY 
-        USER_ID, PRODUCT_ID HAVING COUNT(*)>1
-    ORDER BY 
-        1 ASC, 2 DESC
-    
+SELECT USER_ID,
+        PRODUCT_ID
+    FROM  ONLINE_SALE
+    WHERE 1=1 
+    GROUP BY USER_ID, PRODUCT_ID HAVING COUNT(*) >=2
+    ORDER BY 1 ASC , 2 DESC
     
