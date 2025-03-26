@@ -1,26 +1,25 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+    static int n;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
 
-import java.util.Scanner;
-
-public class Main{
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        int K = sc.nextInt(); //몇번째로 큰 수 인지지
-        K = K+1;
+        String k = Integer.toBinaryString(n+1);
+    
         StringBuilder sb = new StringBuilder();
+        for(int i = 1; i<k.length(); i++){
+            if(k.charAt(i) == '0'){
+                sb.append('4');
+            }
+            else{
+                sb.append('7');
+            }
 
-        int num = 0;
-        while(K!=0){
-            num = K%2;
-            sb.append(num);
-            K = K/2;
         }
-        StringBuilder result = new StringBuilder();
-        for(int i=sb.toString().length()-2;i>=0;i--){
-            if(sb.charAt(i) == '0') result.append(4);
-            else result.append(7);
-        }
-        System.out.println(result.toString());
+
+        System.out.println(sb);
     }
 }
