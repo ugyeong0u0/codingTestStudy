@@ -16,5 +16,3 @@ SELECT '/home/grep/src/' || BOARD_ID  || '/' ||  FILE_ID || FILE_NAME || FILE_EX
         
         ORDER BY 1 DESC
     )
-    
-    
