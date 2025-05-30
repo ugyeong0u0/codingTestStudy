@@ -19,7 +19,7 @@ class Solution {
         for(int i =0; i< reserve.length; i++ ){
             int t = reserve[i];
             if(visited[t]==1){
-                visited[t]=0; // 체육복 없음
+                visited[t]=0; // 체육복 있음
             }else{
                 
                 list.add(t);
