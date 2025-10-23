@@ -1,27 +1,25 @@
+import java.util.*;
 class Solution {
+    static int X, Y ;
+    static int [][] result;
     public int solution(int[][] sizes) {
+        int X = Integer.MIN_VALUE;
+        int Y = Integer.MIN_VALUE;
         int answer = 0;
-        int w =0;
-        int h =0;
-        for(int i =0 ; i< sizes.length ; i++){
-            int max = Math.max(sizes[i][0],sizes[i][1]);
-            int min = Math.min(sizes[i][0],sizes[i][1]);
-            if(h>=max && w>=min || h>=min && w>=max){
-                continue;
-            }else{
-                if(w<max && h<min){
-                    w= max;
-                    h= min;
-                }else if(w<max && h>=min){
-                    w=max;
-                }else if(w>=max && h<min){
-                    h= min;
-                }
-                
-            }
-            // System.out.println(w+"  ,  "+h);
+        int len=  sizes.length;
+        result= new int [len+1][2];
+        
+        for(int i =0; i<len; i++){
+            result[i][0] = Math.max(sizes[i][0],sizes[i][1]);
+            result[i][1] = Math.min(sizes[i][0],sizes[i][1]);
+            System.out.println(X + "    "+result[i][0] );
+            System.out.println(Y + "    "+result[i][1] );
+            X = Math.max(X,result[i][0]);
+            Y = Math.max(Y,result[i][1]);
+            
         }
-        answer= w*h;
+        answer = X*Y ;
+        
         return answer;
     }
 }
