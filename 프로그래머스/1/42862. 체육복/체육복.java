@@ -1,49 +1,42 @@
 import java.util.*;
 class Solution {
-    static int [] visited;
-    ArrayList <Integer> list = new ArrayList<>();
     public int solution(int n, int[] lost, int[] reserve) {
-        int answer = 0;
-        
-        visited= new int [n+1];
-        
         Arrays.sort(lost);
         Arrays.sort(reserve);
-        
-        
-        for(int i =0; i< lost.length; i++ ){
-            int t = lost[i];
-            visited[t]=1; // 체육복 없음
+        int answer = n  - lost.length;
+        int [] p = new int[n+1];        
+        for(int i = 0; i< reserve.length; i++){
+            int idx = reserve[i];
+            p[idx]=1; // 체육복있음
         }
-        
-        for(int i =0; i< reserve.length; i++ ){
-            int t = reserve[i];
-            if(visited[t]==1){
-                visited[t]=0; // 체육복 있음
-            }else{
-                
-                list.add(t);
-            }
-            
-        }
-        
-        
-        for(int i =0; i< list.size(); i++){
-            
-            int t = list.get(i);
-             if(t-1>=1 && visited[t-1]==1){
-                visited[t-1]=0;
-            }else if( t+1 <=n && visited[t+1]==1){
-                visited[t+1]=0;
-            }
-        }
-        
-        for(int i = 1; i< visited.length; i++){
-            if(visited[i]==0){
-                
+        // 여분있지만 && 뺏긴애
+        for(int i = 0; i< lost.length; i++){
+            int idx = lost[i]; // 잃어버린자 
+            if(p[idx] == 1){
+                p[idx]=2; // 여분 자기가 쓴
                 answer++;
             }
+            
         }
+        
+        for(int i = 0; i< lost.length; i++){
+            int idx = lost[i]; // 잃어버린자 
+            if(p[idx]!=2){
+                 if(p[idx-1] == 1 && idx -1 >=1){
+                    p[idx-1] = 0;  
+                    answer ++;
+                    continue;
+                 }
+                if(idx != n && p[idx+1] == 1){
+                    p[idx+1] = 0;
+                    answer ++; 
+                    continue; 
+                    
+                  }
+                 
+            }
+        }   
+        
         
         return answer;
     }
